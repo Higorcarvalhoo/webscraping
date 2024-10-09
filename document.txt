@@ -1,0 +1,32 @@
+###  Introdução  ###
+
+Este documento detalha a criação do Bot Aviator, que foi desenvolvido utilizando as bibliotecas Selenium e telebot. O objetivo do bot é facilitar a integração com sites de apostas e cassinos, oferecendo uma abordagem eficiente para a captura e manipulação de dados.
+
+###  Bibliotecas Utilizadas  ###
+
+# Selenium: Utilizado para automação de navegadores, permitindo a execução de web scraping para a captura de informações diretamente de sites.
+
+# telebot: Biblioteca que facilita a interação com o Telegram, permitindo o envio de mensagens e notificações.
+
+
+###  Configuração Inicial  ###
+
+A configuração inicial do Bot Aviator permite a vinculação rápida e prática a diferentes sites de apostas/cassinos. Isso é realizado através de um documento no formato JSON, que contém os dados iniciais de configuração. Esse design possibilita manutenções simples e rápidas, permitindo que os usuários atualizem as informações conforme necessário.
+
+###  Funcionamento do Bot  ###
+
+O Bot Aviator utiliza técnicas de web scraping para acessar iFrames dos sites desejados. Ele captura informações relevantes e as transforma em dados utilizáveis, que são armazenados para posterior análise e tomada de decisões.
+
+
+###  Funcionalidades Principais   ###
+
+O script possui integração com a biblioteca telebot, permitindo que o bot envie informações relevantes ao usuário. As principais funcionalidades incluem:
+
+Realizar entrada: O bot pode realizar apostas automaticamente com base em critérios definidos pelo usuário.
+Resultado positivo: Notificações são enviadas ao usuário em caso de ganhos nas apostas.
+Resultado negativo: O bot também informa ao usuário quando há perdas, permitindo um monitoramento contínuo das operações.
+
+
+###  Considerações Finais  ### 
+
+O Bot Aviator oferece uma solução prática e eficiente para quem deseja operar em sites de apostas e cassinos. A utilização de web scraping e a integração com Telegram proporcionam uma experiência dinâmica e informativa para os usuários.

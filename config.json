@@ -1,0 +1,14 @@
+{
+    "tokentelegram": "7279256955:AAGYfeDyxDEJtzvpAB5BD1Qdaza7lpmdUgc",
+    "chat_id_telegram": "-1002257445174",
+    "username": "higor-henrry@hotmail.com",
+    "password": "Davi@106",
+    "url": "https://www.rivalry.com/casino/aviator",
+    "accessPaths": {
+        "username": "/html/body/div[3]/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[1]/div/div/input",
+        "password": "/html/body/div[3]/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/input",
+        "loginButton": "/html/body/div[3]/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[3]/button",
+        "accessIframe": "/html/body/div[1]/div/div/div/div/div/iframe",
+        "classCandle": "/html/body/app-root/app-game/div/div[1]/div[2]/div/div[2]/div[1]"
+    }
+}

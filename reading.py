@@ -6,8 +6,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC  
 from time import sleep
 import json
-import telebot
-
 
 # Caminho .Json
 with open('C:\\Users\\higor.carvalho\\Desktop\\Aviator\\config.json') as config_file:
@@ -23,13 +21,6 @@ chrome_options.add_argument("--start-maximized")
 # Crie uma instância do navegador Chrome
 browser = webdriver.Chrome(service=service, options=chrome_options)
 
-
-# Dados Telegram
-
-token = config['tokentelegram']
-chat_id = config['chat_id_telegram']
-bot = telebot.TeleBot(token)
-
 # Dados de acesso
 Username = config['username']
 Password = config['password']
@@ -39,28 +30,6 @@ accessPathPassword = config['accessPaths']['password']
 loginButton = config['accessPaths']['loginButton']
 accessIframe = config['accessPaths']['accessIframe']
 classCandle = config['accessPaths']['classCandle'] 
-
-
-def enter(lista):
-    for numero in lista[:3]:
-        if numero >=2:
-            return False
-    return True
-
-def greenRed(lista):
-    for numero in lista[:1]:
-        if numero >= 1.5:
-            bot.send_message(chat_id,'🔹 ENTRADA FINALIZADA 🔹')
-            bot.send_message(chat_id,'✅✅✅ VITÓRIA ✅✅✅')
-        else:
-            bot.send_message(chat_id,'🔹 ENTRADA FINALIZADA 🔹')
-            bot.send_message(chat_id,'❌RED❌')
-            sleep(5)
-            bot.send_message(chat_id,'⏰AGUARDAR PROXIMA RODADA⏰')
-            sleep(90)
-            break
-        break
-
 
 # Navegue até a página desejada
 browser.get(url)
@@ -99,25 +68,17 @@ try:
     while True:
         # Coleta de resultados 
         result = [float(n) for n in browser.find_element(
-            By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
+            By.XPATH, classCandle).text.replace('x', '').split('\n')][:100]
 
         # Verificação contínua
         while True:
             verification = [float(n) for n in browser.find_element(
-                By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
+                By.XPATH, classCandle).text.replace('x', '').split('\n')][:100]
             if verification != result:
                 print(verification)
-                if enter(verification):
-                    bot.send_message(chat_id,'🛫 REALIZAR ENTRADA 🛬')
-                    while True:
-                        inputResult = [float(n) for n in browser.find_element(
-                        By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
-                        if inputResult != verification:
-                            print(inputResult)
-                            if greenRed(inputResult):
-                                break
-                            break
                 break
+    
+
                                      
 except Exception as e:
     print(f"Erro: {e}")

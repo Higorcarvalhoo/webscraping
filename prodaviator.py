@@ -41,8 +41,14 @@ accessIframe = config['accessPaths']['accessIframe']
 classCandle = config['accessPaths']['classCandle'] 
 
 
+def alert(lista):
+    for numero in lista[:1]:
+        if numero >=2:
+            return False
+    return True
+
 def enter(lista):
-    for numero in lista[:3]:
+    for numero in lista[:2]:
         if numero >=2:
             return False
     return True
@@ -50,14 +56,12 @@ def enter(lista):
 def greenRed(lista):
     for numero in lista[:1]:
         if numero >= 1.5:
-            bot.send_message(chat_id,'🔹 ENTRADA FINALIZADA 🔹')
-            bot.send_message(chat_id,'✅✅✅ VITÓRIA ✅✅✅')
+            bot.send_message(chat_id,'*✅✅✅ VITÓRIA ✅✅✅*', parse_mode='Markdown')
         else:
-            bot.send_message(chat_id,'🔹 ENTRADA FINALIZADA 🔹')
-            bot.send_message(chat_id,'❌RED❌')
+            bot.send_message(chat_id,'*❌RED❌*', parse_mode='Markdown')
             sleep(5)
-            bot.send_message(chat_id,'⏰AGUARDAR PROXIMA RODADA⏰')
-            sleep(90)
+            bot.send_message(chat_id,'*⏰AGUARDAR PROXIMA RODADA⏰*', parse_mode='Markdown')
+            sleep(120)
             break
         break
 
@@ -97,26 +101,31 @@ try:
     
 
     while True:
-        # Coleta de resultados 
         result = [float(n) for n in browser.find_element(
             By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
-
-        # Verificação contínua
         while True:
             verification = [float(n) for n in browser.find_element(
                 By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
             if verification != result:
                 print(verification)
-                if enter(verification):
-                    bot.send_message(chat_id,'🛫 REALIZAR ENTRADA 🛬')
+                if alert(verification):
+                    bot.send_message(chat_id,'*⚠️ POSSIVEL ENTRADA ⚠️*', parse_mode='Markdown')
                     while True:
-                        inputResult = [float(n) for n in browser.find_element(
-                        By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
-                        if inputResult != verification:
-                            print(inputResult)
-                            if greenRed(inputResult):
-                                break
-                            break
+                        verification1 = [float(n) for n in browser.find_element(
+                            By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
+                        if verification1 != verification:
+                            print(verification1)
+                            if enter(verification1):
+                                bot.send_message(chat_id,'*🛫 REALIZAR ENTRADA 🛬*', parse_mode='Markdown')
+                                while True:
+                                    inputResult = [float(n) for n in browser.find_element(
+                                By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
+                                    if inputResult != verification1:
+                                        print(inputResult)
+                                        if greenRed(inputResult):
+                                            break
+                                        break
+                            break 
                 break
                                      
 except Exception as e:

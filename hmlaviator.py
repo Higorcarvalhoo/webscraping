@@ -41,6 +41,12 @@ accessIframe = config['accessPaths']['accessIframe']
 classCandle = config['accessPaths']['classCandle'] 
 
 
+def alert(lista):
+    for numero in lista[:1]:
+        if numero >=2:
+            return False
+    return True
+
 def enter(lista):
     for numero in lista[:2]:
         if numero >=2:
@@ -98,27 +104,33 @@ try:
     
 
     while True:
-        # Coleta de resultados 
         result = [float(n) for n in browser.find_element(
             By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
-
-        # Verificação contínua
         while True:
             verification = [float(n) for n in browser.find_element(
                 By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
             if verification != result:
                 print(verification)
-                if enter(verification):
-                    print('Realizar entrada...')
-                    bot.send_message(chat_id,'Realizar entrada...')
+                if alert(verification):
+                    print('Possivel entrada...')
+                    bot.send_message(chat_id,'Possivel entrada...')
                     while True:
-                        inputResult = [float(n) for n in browser.find_element(
-                        By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
-                        if inputResult != verification:
-                            print(inputResult)
-                            if greenRed(inputResult):
-                                break
-                            break
+                        verification1 = [float(n) for n in browser.find_element(
+                            By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
+                        if verification1 != verification:
+                            print(verification1)
+                            if enter(verification1):
+                                print('Realizar Entrada...')
+                                bot.send_message(chat_id,'Realizar Entrada...')
+                                while True:
+                                    inputResult = [float(n) for n in browser.find_element(
+                                By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
+                                    if inputResult != verification1:
+                                        print(inputResult)
+                                        if greenRed(inputResult):
+                                            break
+                                        break
+                            break 
                 break
                                      
 except Exception as e:

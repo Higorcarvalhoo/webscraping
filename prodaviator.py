@@ -8,7 +8,6 @@ from time import sleep
 import json
 import telebot
 
-
 # Caminho .Json
 with open('C:\\Users\\higor.carvalho\\Desktop\\Aviator\\config.json') as config_file:
     config = json.load(config_file)
@@ -22,7 +21,6 @@ chrome_options.add_argument("--start-maximized")
 
 # Crie uma instância do navegador Chrome
 browser = webdriver.Chrome(service=service, options=chrome_options)
-
 
 # Dados Telegram
 
@@ -65,7 +63,6 @@ def greenRed(lista):
             break
         break
 
-
 # Navegue até a página desejada
 browser.get(url)
 print('Página acessada com sucesso...')
@@ -99,7 +96,6 @@ try:
     print("Realizada troca de Iframe...")
     sleep(5)
     
-
     while True:
         result = [float(n) for n in browser.find_element(
             By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]

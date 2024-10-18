@@ -8,7 +8,6 @@ from time import sleep
 import json
 import telebot
 
-
 # Caminho .Json
 with open('C:\\Users\\higor.carvalho\\Desktop\\Aviator\\config.json') as config_file:
     config = json.load(config_file)
@@ -22,7 +21,6 @@ chrome_options.add_argument("--start-maximized")
 
 # Crie uma instância do navegador Chrome
 browser = webdriver.Chrome(service=service, options=chrome_options)
-
 
 # Dados Telegram
 
@@ -38,7 +36,7 @@ accessPathUsers = config['accessPaths']['username']
 accessPathPassword = config['accessPaths']['password']
 loginButton = config['accessPaths']['loginButton']
 accessIframe = config['accessPaths']['accessIframe']
-classCandle = config['accessPaths']['classCandle'] 
+classCandle = config['accessPaths']['classCandle']  
 
 
 def alert(lista):

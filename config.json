@@ -3,12 +3,15 @@
     "chat_id_telegram": "-1002257445174",
     "username": "higor-henrry@hotmail.com",
     "password": "Davi@106",
-    "url": "https://www.rivalry.com/casino/aviator",
+    "urlrivalry": "https://www.rivalry.com/casino/aviator",
+    "urlnovibet": "https://aviator-next.spribegaming.com?user=3657362&token=7a49becb-0f0e-483e-a59e-974257f8d0e4&lang=PT-BR&currency=BRL&operator=sgdigital_961&ogsgameid=2440001&envid=eur",
     "accessPaths": {
         "username": "/html/body/div[3]/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[1]/div/div/input",
         "password": "/html/body/div[3]/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[2]/div/div/div/input",
         "loginButton": "/html/body/div[3]/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[3]/button",
         "accessIframe": "/html/body/div[1]/div/div/div/div/div/iframe",
-        "classCandle": "/html/body/app-root/app-game/div/div[1]/div[2]/div/div[2]/div[1]"
+        "classCandle": "/html/body/app-root/app-game/div/div[1]/div[2]/div/div[2]/div[1]",
+        "classCandleNovibet": "/html/body/app-root/app-game/div/div[1]/div[2]/div/div[2]/div[1]/app-stats-widget"
+
     }
 }

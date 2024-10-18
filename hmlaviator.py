@@ -7,6 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 import json
 import telebot
+import threading
+import time
 
 # Caminho .Json
 with open('C:\\Users\\higor.carvalho\\Desktop\\Aviator\\config.json') as config_file:
@@ -23,30 +25,30 @@ chrome_options.add_argument("--start-maximized")
 browser = webdriver.Chrome(service=service, options=chrome_options)
 
 # Dados Telegram
-
 token = config['tokentelegram']
 chat_id = config['chat_id_telegram']
 bot = telebot.TeleBot(token)
 
-# Dados de acesso
-Username = config['username']
-Password = config['password']
-url = config['url']
-accessPathUsers = config['accessPaths']['username']
-accessPathPassword = config['accessPaths']['password']
-loginButton = config['accessPaths']['loginButton']
-accessIframe = config['accessPaths']['accessIframe']
-classCandle = config['accessPaths']['classCandle']  
+#funções telebot
+def delete_message_after_time(chat_id, message_id, delay):
+    threading.Timer(delay, bot.delete_message, [chat_id, message_id]).start()
+    
+@bot.message_handler(commands=['start'])
+def start(message):
+    chat_id = message.chat.id
 
+# Dados de acesso
+url = config['urlnovibet']
+classCandle = config['accessPaths']['classCandleNovibet'] 
 
 def alert(lista):
-    for numero in lista[:1]:
+    for numero in lista[:2]:
         if numero >=2:
             return False
     return True
 
 def enter(lista):
-    for numero in lista[:2]:
+    for numero in lista[:3]:
         if numero >=2:
             return False
     return True
@@ -54,53 +56,22 @@ def enter(lista):
 def greenRed(lista):
     for numero in lista[:1]:
         if numero >= 1.5:
-            print('green')
-            bot.send_message(chat_id,'green')
+            bot.send_message(chat_id,'*✅✅✅ VITÓRIA ✅✅✅*', parse_mode='Markdown')
         else:
-            print('red')
-            bot.send_message(chat_id,'red')
+            bot.send_message(chat_id,'*❌RED❌*', parse_mode='Markdown')
             sleep(5)
-            print('Aguarde a proxima rodada...')
-            bot.send_message(chat_id,'Aguarde a proxima rodada...')
+            bot.send_message(chat_id,'*⏰AGUARDAR PROXIMA RODADA⏰*', parse_mode='Markdown')
             sleep(120)
             break
         break
 
 
-# Navegue até a página desejada
 browser.get(url)
 print('Página acessada com sucesso...')
+sleep(10)
+
 
 try:
-    # Preencha o campo de entrada para o nome de usuário
-    WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located((By.XPATH, accessPathUsers))
-    ).send_keys(Username)
-    print('Username preenchido com sucesso...')
-    
-    # Preencha o campo de entrada para a senha
-    WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located((By.XPATH, accessPathPassword))
-    ).send_keys(Password)
-    print('Password preenchido com sucesso...')
-    
-    # Clique no botão de login
-    WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable((By.XPATH, loginButton))
-    ).click()
-    print('Acesso concluído')
-
-    print("Configurando iframe...")
-    sleep(10)
-
-    # Aguardando e mudando para o iframe
-    WebDriverWait(browser, 40).until(
-        EC.frame_to_be_available_and_switch_to_it((By.XPATH, accessIframe))
-    )
-    print("Realizada troca de Iframe...")
-    sleep(5)
-    
-
     while True:
         result = [float(n) for n in browser.find_element(
             By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
@@ -110,16 +81,16 @@ try:
             if verification != result:
                 print(verification)
                 if alert(verification):
-                    print('Possivel entrada...')
-                    bot.send_message(chat_id,'Possivel entrada...')
+                    sent_message = bot.send_message(chat_id, '*⚠️ POSSÍVEL ENTRADA ⚠️*', parse_mode='Markdown')
+                    delete_message_after_time(chat_id, sent_message.message_id, 60)
                     while True:
                         verification1 = [float(n) for n in browser.find_element(
                             By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
                         if verification1 != verification:
                             print(verification1)
                             if enter(verification1):
-                                print('Realizar Entrada...')
-                                bot.send_message(chat_id,'Realizar Entrada...')
+                                bot.send_message(chat_id,'*🛫 REALIZAR ENTRADA 🛬*', parse_mode='Markdown')
+                                bot.send_message(chat_id,'*🛫 >>>>> 1,50 <<<<< 🛬*', parse_mode='Markdown')
                                 while True:
                                     inputResult = [float(n) for n in browser.find_element(
                                 By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]

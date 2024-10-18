@@ -7,6 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 import json
 import telebot
+import threading
+import time
 
 # Caminho .Json
 with open('C:\\Users\\higor.carvalho\\Desktop\\Aviator\\config.json') as config_file:
@@ -23,10 +25,17 @@ chrome_options.add_argument("--start-maximized")
 browser = webdriver.Chrome(service=service, options=chrome_options)
 
 # Dados Telegram
-
 token = config['tokentelegram']
 chat_id = config['chat_id_telegram']
 bot = telebot.TeleBot(token)
+
+#funções telebot
+def delete_message_after_time(chat_id, message_id, delay):
+    threading.Timer(delay, bot.delete_message, [chat_id, message_id]).start()
+    
+@bot.message_handler(commands=['start'])
+def start(message):
+    chat_id = message.chat.id
 
 # Dados de acesso
 url = config['urlnovibet']
@@ -57,7 +66,6 @@ def greenRed(lista):
         break
 
 
-
 browser.get(url)
 print('Página acessada com sucesso...')
 sleep(10)
@@ -73,7 +81,8 @@ try:
             if verification != result:
                 print(verification)
                 if alert(verification):
-                    bot.send_message(chat_id,'*⚠️ POSSIVEL ENTRADA ⚠️*', parse_mode='Markdown')
+                    sent_message = bot.send_message(chat_id, '*⚠️ POSSÍVEL ENTRADA ⚠️*', parse_mode='Markdown')
+                    delete_message_after_time(chat_id, sent_message.message_id, 60)
                     while True:
                         verification1 = [float(n) for n in browser.find_element(
                             By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
@@ -81,6 +90,7 @@ try:
                             print(verification1)
                             if enter(verification1):
                                 bot.send_message(chat_id,'*🛫 REALIZAR ENTRADA 🛬*', parse_mode='Markdown')
+                                bot.send_message(chat_id,'*🛫 >>>>> 1,50 <<<<< 🛬*', parse_mode='Markdown')
                                 while True:
                                     inputResult = [float(n) for n in browser.find_element(
                                 By.XPATH, classCandle).text.replace('x', '').split('\n')][:10]
